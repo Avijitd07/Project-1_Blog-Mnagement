@@ -5,7 +5,7 @@ require("./dbConnection/mongoose");
 const port = process.env.PORT || 5001;
 
 
-/*****************************Middleware********************************/
+
 app.use(express.json())
 app.use("/", route);
 
