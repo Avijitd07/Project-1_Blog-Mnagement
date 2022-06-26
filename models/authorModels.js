@@ -1,33 +1,34 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-/************************CREATE AUTHORS SCHEMA*********************************/
-const authorSchema = new mongoose.Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-      enum: ["Mr", "Mrs", "Miss"],
+const authorSchema = new mongoose.Schema( {
+    title :{
+        type:String,
+        required :true,
+        enum :["Mr","Mrs","Miss"],
+        trim :true
+
     },
     fname: {
-      type: String,
-      required: true,
+        type:String,
+        required:true
     },
     lname: {
-      type: String,
-      required: true,
+        
+        type:String,
+        required:true
     },
+    
     email: {
-      type: String,
-      required: true,
-      unique: true
+        type:String,
+        unique :true,
+        required:true
+    
     },
     password: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-  },
-  { timestamps: true }
-);
-/*********************************CREATE CONNECATION IN AUTHOR***************************************/
-module.exports = mongoose.model("Author", authorSchema);
+        type:String,
+        required:true
+    }
+   
+}, { timestamps: true });
+
+module.exports = mongoose.model('Author', authorSchema)

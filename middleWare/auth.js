@@ -1,5 +1,13 @@
 const jwt = require("jsonwebtoken");
 const blogModels = require("../models/blogModels");
+const ObjectId = require("mongoose").Types.ObjectId
+
+const isValid = function (x) {
+    if (typeof x === "undefined" || x === null) return false;
+    if (typeof x === "string" && x.trim().length === 0) return false;
+    return true;
+};
+
 
 const authentication = function (req, res, next) {
     try {
@@ -34,7 +42,14 @@ const authorization = async function (req, res, next) {
         let authorLoggedIn = decodedToken.authorId
         //console.log(authorLoggedIn)
 
+        //Validation of author Id from token
+        if (!ObjectId.isValid(authorLoggedIn)) return res.status(400).send({ status: false, msg: "Not a valid author ID from Token" })
+
         let blogId = req.params.blogId
+
+        //Validation of blogId 
+        if (!ObjectId.isValid(blogId)) return res.status(400).send({ status: false, msg: "Not a valid blog ID" })
+
         let blogData = await blogModels.findById(blogId)
 
         //console.log(blogData.authorId)
@@ -57,9 +72,17 @@ const authorization_2 = function (req, res, next) {
 
         let authorLoggedIn = decodedToken.authorId
 
+        //Validation of author Id from token
+        if (!ObjectId.isValid(authorLoggedIn)) return res.status(400).send({ status: false, msg: "Not a valid author ID from Token" })
+
         let authorId = req.query.authorId;
 
-        if (authorId && (authorId != authorLoggedIn)) return res.status(403).send({ status: false, msg: "Unauthorized" })
+        //validation of author Id
+        if (authorId) {
+            if (!ObjectId.isValid(authorId)) return res.status(400).send({ status: false, msg: "Not a valid author ID from Token" })
+            if (authorId != authorLoggedIn) return res.status(403).send({ status: false, msg: "Unauthorized" })
+
+        }
 
         if (!authorId) {
             authorId = authorLoggedIn;

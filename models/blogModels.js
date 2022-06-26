@@ -13,7 +13,7 @@ const blogSchema = new mongoose.Schema(
       ref: "Author",
     },
     body: {
-      type:mongoose.SchemaTypes.Mixed,
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
     tags: {
@@ -32,7 +32,7 @@ const blogSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    deletedAt:Date,
+    deletedAt: Date,
     publishedAt: {
       type: Date,
     },
@@ -43,5 +43,5 @@ const blogSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-/*********************************CREATE CONNECATION BLOG***************************************/
+
 module.exports = mongoose.model("Blog", blogSchema);
